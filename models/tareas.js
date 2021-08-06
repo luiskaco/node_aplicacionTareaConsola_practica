@@ -52,6 +52,7 @@ class Tareas {
         })
     }
 
+    // Funcion para crear tareas
     crearTarea( desc = ''){
         const tarea = new Tarea(desc);
         
@@ -80,6 +81,7 @@ class Tareas {
 
     }
 
+    //Funcion para listar pendiente y completados
     listarPendienteCompletadas( completadas = true ){
         
         let num;
@@ -91,7 +93,7 @@ class Tareas {
                 if(completadoEn !== null){
                     msg = 'Completado'.green;
                     num = `${++i}.`.green;
-                    console.log(`${num.toString().green} ${desc} :: ${msg}`)
+                    console.log(`${num.toString().green} ${desc} :: ${msg} :: ${completadoEn.green}`)
                 }
             }else{
                 msg = 'Pendiente'.green;
@@ -102,6 +104,28 @@ class Tareas {
           
 
         });
+    }
+
+    // Funcion para habilitar y deshabilitar tarea
+    toggleCompletadas(ids = []) {
+
+        // recorremos las tareas buscando las tareas por su id para colocarlo como completada
+        ids.forEach(id => {
+            
+            const tarea = this._listado[id]
+
+            if(!tarea.completadoEn) {
+                tarea.completadoEn = new Date().toISOString()
+            }
+        });
+
+        // Barremos los id para desmarcar las no completadadas
+        this.listadoArr.forEach(tarea => {
+            if(!ids.includes(tarea.id)){
+                this._listado[tarea.id].completadoEn = null;
+                
+            }
+        })
     }
 
 }

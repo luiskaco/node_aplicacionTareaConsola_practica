@@ -1,7 +1,7 @@
 require('colors')
 // const {mostrarMenu, pausa} = require('./helper/mensajes'); FOrma manual
 // importamos menu
-const {inquirerMenu, pausa,leerInput, listadoTareasBorrar, confirmar} = require('./helper/inquirer');
+const {inquirerMenu, pausa,leerInput, listadoTareasBorrar, confirmar, mostrarlistadochecklist} = require('./helper/inquirer');
 
 // Importamos clase de datea
 const Tareas = require('./models/tareas');
@@ -53,16 +53,20 @@ const main = async () => {
 
                 // console.log(tareas.listadoArr);
                 break;
-            case 3:
+            case 3: // Listar completados
                 tareas.listarPendienteCompletadas();
 
                 break;
-            case 4:
+            case 4: // Listadode pendiente
                 tareas.listarPendienteCompletadas(false);
 
                 break;
-            case 5:
-             
+            case 5:  // Completado y pendiente
+                // Obtenemos un arreglode de id de las marcada
+              const ids = await mostrarlistadochecklist(tareas.listadoArr);
+//                console.log(ids);
+
+                tareas.toggleCompletadas(ids);
 
                 break;
             case 6: // Borrar

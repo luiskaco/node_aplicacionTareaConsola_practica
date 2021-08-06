@@ -127,12 +127,9 @@ const listadoTareasBorrar = async( tareas = [] ) => {
     // Construimos el menu
      const {id} = await inquirer.prompt(pregunta)
      return id;
-
-
-
 };
 
-
+// Confirmar si se va eliminar
 const confirmar = async (message) => {
     const question = [{
         type: 'confirm', // Devuelve bolean
@@ -144,11 +141,43 @@ const confirmar = async (message) => {
     return ok;
 }
 
+// listar todas las tareas completadas
+const mostrarlistadochecklist = async( tareas = [] ) => {
+
+    // Vaciar las tareas en formatode pregunta
+    const choices = tareas.map((tarea, i) => {
+
+        const idx = `${i + 1}.`.green;
+
+        return {
+            value: tarea.id,
+            name: `${idx} ${tarea.desc}`,
+            checked: (tarea.completadoEn) ? true : false
+        }
+    })
+
+
+    // perpara estrucutrua
+    const pregunta = [
+        {
+            type:'checkbox',
+            name:'ids',  // Valor que extraemos en el inquiere.promp
+            message: 'Selecione',
+            choices
+        }
+    ]
+    // console.log(choices);
+
+    // Construimos el menu
+     const {ids} = await inquirer.prompt(pregunta)
+     return ids;
+};
 
 module.exports = {
     inquirerMenu,
     pausa,
     leerInput,
     listadoTareasBorrar,
-    confirmar
+    confirmar,
+    mostrarlistadochecklist
 }
